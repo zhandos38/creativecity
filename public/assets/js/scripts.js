@@ -199,13 +199,14 @@ $(document).ready(function () {
                         myMap.setZoom(17);
 
                         objectManager.objects.each(object => {
+                            console.log(object);
                             objectManager.objects.setObjectOptions(object.id, {
-                                preset: 'islands#blueIcon'
+                                preset: object.options.data.format === 'LED' ? 'islands#redIcon' : 'islands#blueIcon',
                             });
                         });
 
                         objectManager.objects.setObjectOptions(ui.item.id, {
-                            preset: 'islands#redIcon'
+                            preset: 'islands#greenIcon'
                         });
                     }
                 });
