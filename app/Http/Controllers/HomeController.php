@@ -36,24 +36,28 @@ class HomeController extends Controller
     public function getPoints()
     {
         if(request()->ajax()){
-            $points = Point::select('id', 'title_ru', 'description_ru', 'lang', 'lat', 'image', 'direction', 'format', 'width', 'height')->get();
             $responseData = [];
-            /** @var Point $point */
-            foreach ($points as $point) {
-                $responseData[] = [
-                    'id' => $point->id,
-                    'title_ru' => $point->title_ru,
-                    'description_ru' => $point->description_ru,
-                    'lang' => $point->lang,
-                    'lat' => $point->lat,
-                    'image' => $point->image,
-                    'direction' => $point->getDirectionTitleAttribute(),
-                    'format' => $point->getFormatTitleAttribute(),
-                    'width' => $point->width,
-                    'height' => $point->height,
-                    'label' => $point->title_ru,
-                    'value' => $point->id,
-                ];
+            try {
+                $points = Point::select('id', 'title_ru', 'description_ru', 'lang', 'lat', 'image', 'direction', 'format', 'width', 'height')->get();
+                /** @var Point $point */
+                foreach ($points as $point) {
+                    $responseData[] = [
+                        'id' => $point->id,
+                        'title_ru' => $point->title_ru,
+                        'description_ru' => $point->description_ru,
+                        'lang' => $point->lang,
+                        'lat' => $point->lat,
+                        'image' => $point->image,
+                        'direction' => $point->getDirectionTitleAttribute(),
+                        'format' => $point->getFormatTitleAttribute(),
+                        'width' => $point->width,
+                        'height' => $point->height,
+                        'label' => $point->title_ru,
+                        'value' => $point->id,
+                    ];
+                }
+            } catch (\Exception $err) {
+                return response()->json($err);
             }
 
             return response()->json(['success' => 1, 'data' => $responseData]);
