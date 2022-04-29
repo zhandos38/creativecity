@@ -205,7 +205,7 @@ $(document).ready(function () {
                         });
 
                         objectManager.objects.setObjectOptions(ui.item.id, {
-                            preset: 'islands#yellowIcon'
+                            preset: 'islands#redIcon'
                         });
                     }
                 });
