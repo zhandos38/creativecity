@@ -183,7 +183,7 @@ $(document).ready(function () {
 
                 var myMap = new ymaps.Map("map", {center: [43.234638, 76.896812], zoom: 13, controls: ['zoomControl']});
                 const searchBox = `
-                    <input id="search-box" type="text" placeholder="Поиск" style="position: absolute; top: 10px; left: 10px; padding: 5px 10px" />
+                    <input id="search-box" type="text" placeholder="Поиск по конструкциям" style="position: absolute; top: 10px; left: 10px; padding: 5px 10px; font-size: 16px; width: 260px" />
                 `;
 
                 $('#map').css('position', 'relative');
