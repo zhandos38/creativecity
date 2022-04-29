@@ -291,10 +291,10 @@
                             <div class="card-title">{{ $price->title }}</div>
 							<div>
 								@if($price->id === 1)
-								<img style="margin: 16px 0;" src="{{ asset('assets/img/billboard_mini.jpg') }}" />
+								<img style="margin: 16px 0;" src="{{ asset('assets/img/cityboard_mini.jpg') }}" />
 								@endif
 								@if($price->id === 3)
-								<img style="margin: 16px 0;" src="{{ asset('assets/img/cityboard_mini.jpg') }}" />
+								<img style="margin: 16px 0;" src="{{ asset('assets/img/billboard_mini.jpg') }}" />
 								@endif
 								@if($price->id === 4)
 								<img style="margin: 16px 0;" src="{{ asset('assets/img/led_mini.jpg') }}" />

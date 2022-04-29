@@ -179,9 +179,11 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 let placemarks = response.data;
-                console.log(placemarks);
 
                 var myMap = new ymaps.Map("map", {center: [43.234638, 76.896812], zoom: 13, controls: ['zoomControl']});
+
+                const objectManager = new ymaps.ObjectManager();
+
                 const searchBox = `
                     <input id="search-box" type="text" placeholder="Поиск по конструкциям" style="position: absolute; top: 10px; left: 10px; padding: 5px 10px; font-size: 16px; width: 260px" />
                 `;
@@ -194,39 +196,71 @@ $(document).ready(function () {
                         event.preventDefault();
                         $("#search-box").val(ui.item.label);
                         myMap.setCenter([ui.item.lang, ui.item.lat]);
+                        myMap.setZoom(17);
+
+                        objectManager.objects.each(object => {
+                            objectManager.objects.setObjectOptions(object.id, {
+                                preset: 'islands#blueIcon'
+                            });
+                        });
+
+                        objectManager.objects.setObjectOptions(ui.item.id, {
+                            preset: 'islands#yellowIcon'
+                        });
                     }
                 });
                 // myMap.controls.add("zoomControl").add("typeSelector").add("mapTools");
+
                 placemarks.forEach(placemark => {
-                    var myPlacemark = new ymaps.Placemark([placemark.lang, placemark.lat], {}, {
+                    /*var myPlacemark = new ymaps.Placemark([placemark.lang, placemark.lat], {}, {
                         iconImageHref: './assets/img/map-pin.png',
                         // Размеры метки.
                         iconImageSize: [48, 51],
                         // Смещение левого верхнего угла иконки относительно
                         // её "ножки" (точки привязки).
                         iconImageOffset: [-3, -60]
-                    });
-                    myMap.geoObjects.add(myPlacemark);
-                    myPlacemark.events.add('click', function () {
-                        let image = placemark.image;
-                        if(placemark.image != null){
-                            image = image.replace("public", "storage");
+                    });*/
+                    objectManager.add({
+                        type: 'Feature',
+                        id: placemark.id,
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [placemark.lang, placemark.lat]
+                        },
+                        options: {
+                            iconImageHref: './assets/img/map-pin.png',
+                            // Размеры метки.
+                            iconImageSize: [48, 51],
+                            // Смещение левого верхнего угла иконки относительно
+                            // её "ножки" (точки привязки).
+                            iconImageOffset: [-3, -60],
+                            data: placemark,
                         }
-
-                        $('#Placemark-Modal img').attr('src', image);
-                        $('#Placemark-Modal .modal-btn').attr('data-id', placemark.id);
-                        $('#Placemark-Modal .modal-text').html(placemark.description_ru);
-                        $('#Placemark-Modal .modal-title').html(placemark.title_ru);
-						$('#Placemark-Modal #direction').html(placemark.direction);
-						$('#Placemark-Modal #format').html(placemark.format);
-						$('#Placemark-Modal #height').html(placemark.height);
-						$('#Placemark-Modal #width').html(placemark.width);
-						$('#Placemark-Modal #lat').html(placemark.lat);
-						$('#Placemark-Modal #lng').html(placemark.lang);
-						console.log(placemark);
-                        PlacemarkModal.style.display = 'block'
                     });
-                })
+                });
+                objectManager.objects.events.add(['click'], function (e) {
+                    const objectId = e.get('objectId');
+                    const placemark = objectManager.objects.getById(objectId).options.data;
+
+                    let image = placemark.image;
+                    if(placemark.image != null){
+                        image = image.replace("public", "storage");
+                    }
+
+                    $('#Placemark-Modal img').attr('src', image);
+                    $('#Placemark-Modal .modal-btn').attr('data-id', placemark.id);
+                    $('#Placemark-Modal .modal-text').html(placemark.description_ru);
+                    $('#Placemark-Modal .modal-title').html(placemark.title_ru);
+                    $('#Placemark-Modal #direction').html(placemark.direction);
+                    $('#Placemark-Modal #format').html(placemark.format);
+                    $('#Placemark-Modal #height').html(placemark.height);
+                    $('#Placemark-Modal #width').html(placemark.width);
+                    $('#Placemark-Modal #lat').html(placemark.lat);
+                    $('#Placemark-Modal #lng').html(placemark.lang);
+                    PlacemarkModal.style.display = 'block'
+                });
+
+                myMap.geoObjects.add(objectManager);
                 // myMap.controls.remove('mapTools').remove('zoomControl').remove('typeSelector');
             },
             error: function () {
