@@ -225,7 +225,7 @@ $(document).ready(function () {
                         id: placemark.id,
                         geometry: {
                             type: 'Point',
-                            coordinates: [placemark.lang, placemark.lat]
+                            coordinates: [placemark.lang, placemark.lat],
                         },
                         options: {
                             iconImageHref: './assets/img/map-pin.png',
@@ -235,6 +235,7 @@ $(document).ready(function () {
                             // её "ножки" (точки привязки).
                             iconImageOffset: [-3, -60],
                             data: placemark,
+                            preset: placemark.format === 'LED' ? 'islands#redIcon' : 'islands#blueIcon'
                         }
                     });
                 });
