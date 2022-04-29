@@ -140,9 +140,9 @@
 
                 <div class="form-group col-md-4">
                     {!! Form::label('direction', 'Направление') !!}
-                    {!! Form::text('direction', isset($point) ? $point->number : null,
+                    {!! Form::select('direction', \App\Models\Point::directions(), isset($point) ? $point->direction : null,
                         [
-                            'class' => 'form-control ' . ($errors->has('direction') ? 'is-invalid' : ''),
+                            'class' => 'js-basic-single form-control ' . ($errors->has('direction') ? 'is-invalid' : '')
                         ])
                     !!}
                     @if($errors->has('direction'))
@@ -154,9 +154,9 @@
 
                 <div class="form-group col-md-4">
                     {!! Form::label('format', 'Формат') !!}
-                    {!! Form::text('format', isset($point) ? $point->number : null,
+                    {!! Form::select('format', \App\Models\Point::formats(), isset($point) ? $point->format : null,
                         [
-                            'class' => 'form-control ' . ($errors->has('format') ? 'is-invalid' : ''),
+                            'class' => 'js-basic-single form-control ' . ($errors->has('format') ? 'is-invalid' : '')
                         ])
                     !!}
                     @if($errors->has('format'))
@@ -168,7 +168,7 @@
 
                 <div class="form-group col-md-6">
                     {!! Form::label('width', 'Ширина') !!}
-                    {!! Form::text('width', isset($point) ? $point->number : null,
+                    {!! Form::text('width', isset($point) ? $point->width : null,
                         [
                             'class' => 'form-control ' . ($errors->has('width') ? 'is-invalid' : ''),
                         ])
@@ -182,7 +182,7 @@
 
                 <div class="form-group col-md-6">
                     {!! Form::label('height', 'Высота') !!}
-                    {!! Form::text('height', isset($point) ? $point->number : null,
+                    {!! Form::text('height', isset($point) ? $point->height : null,
                         [
                             'class' => 'form-control ' . ($errors->has('height') ? 'is-invalid' : ''),
                         ])
@@ -255,8 +255,8 @@ function init () {
 }
 
 function fillCoords(coords) {
-    $('#lang').val(coords[1].toPrecision(8));
-    $('#lat').val(coords[0].toPrecision(8));
+    $('#lang').val(coords[0].toPrecision(8));
+    $('#lat').val(coords[1].toPrecision(8));
 }
 </script>
 

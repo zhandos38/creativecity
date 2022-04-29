@@ -16,9 +16,10 @@
     <link href="https://vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slick/slick.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/js/slick/slick-theme.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jquery-ui.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="./assets/css/effect2.css"/>
     <script
-        src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU&apikey=f8710f34-94f0-4c6c-84ab-985a6216e532"></script>
+        src="https://api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU&apikey=f8710f34-94f0-4c6c-84ab-985a6216e532"></script>
 </head>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-202013811-1">
@@ -187,6 +188,22 @@
             <img src="{{ asset('assets/img/modal-example.png') }}" class="modal-img"/>
             <div class="modal-text"></div>
 			<table class="modal-table">
+                <tr>
+                    <td><b>Направление</b></td>
+                    <td id="direction"></td>
+                </tr>
+                <tr>
+                    <td><b>Формат (тип места)</b></td>
+                    <td id="format"></td>
+                </tr>
+                <tr>
+                    <td><b>Высота</b></td>
+                    <td id="height"></td>
+                </tr>
+                <tr>
+                    <td><b>Ширина</b></td>
+                    <td id="width"></td>
+                </tr>
 				<tr>
 					<td><b>Широта</b></td>
 					<td id="lng"></td>
@@ -223,6 +240,7 @@
 
 
 <script type="text/javascript" src="{{ asset('assets/js/jquery-1.11.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/js/eocjs-newsticker.js') }}"></script>
 <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 <script type="text/javascript" src="{{ asset('assets/js/slick/slick.min.js') }}"></script>

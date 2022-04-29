@@ -14,7 +14,7 @@ class AddNewColumnsToPointsTable extends Migration
     public function up()
     {
         Schema::table('points', function (Blueprint $table) {
-            $table->string('direction');
+            $table->tinyInteger('direction');
             $table->tinyInteger('format');
             $table->string('width');
             $table->string('height');

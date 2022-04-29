@@ -12,6 +12,7 @@ use App\Models\Point;
 use App\Models\Price;
 use Illuminate\Http\Request;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Psy\Util\Json;
 use Symfony\Component\VarDumper\VarDumper;
 
 class HomeController extends Controller
@@ -35,7 +36,27 @@ class HomeController extends Controller
     public function getPoints()
     {
         if(request()->ajax()){
-            return response()->json(['success' => 1, 'data' => Point::select('id', 'title_ru', 'description_ru', 'lang', 'lat', 'image')->get()]);
+            $points = Point::select('id', 'title_ru', 'description_ru', 'lang', 'lat', 'image', 'direction', 'format', 'width', 'height')->get();
+            $responseData = [];
+            /** @var Point $point */
+            foreach ($points as $point) {
+                $responseData[] = [
+                    'id' => $point->id,
+                    'title_ru' => $point->title_ru,
+                    'description_ru' => $point->description_ru,
+                    'lang' => $point->lang,
+                    'lat' => $point->lat,
+                    'image' => $point->image,
+                    'direction' => $point->getDirectionTitleAttribute(),
+                    'format' => $point->getFormatTitleAttribute(),
+                    'width' => $point->width,
+                    'height' => $point->height,
+                    'label' => $point->title_ru,
+                    'value' => $point->id,
+                ];
+            }
+
+            return response()->json(['success' => 1, 'data' => $responseData]);
         }else{
             return abort(404);
         }

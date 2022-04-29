@@ -179,9 +179,24 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 let placemarks = response.data;
+                console.log(placemarks);
 
-                var myMap = new ymaps.Map("map", {center: [43.234638, 76.896812], zoom: 14, controls: []});
-                myMap.controls.add("zoomControl").add("typeSelector").add("mapTools");
+                var myMap = new ymaps.Map("map", {center: [43.234638, 76.896812], zoom: 13, controls: ['zoomControl']});
+                const searchBox = `
+                    <input id="search-box" type="text" placeholder="Поиск" style="position: absolute; top: 10px; left: 10px; padding: 5px 10px" />
+                `;
+
+                $('#map').css('position', 'relative');
+                $('#map').append(searchBox);
+                $( "#search-box" ).autocomplete({
+                    source: placemarks,
+                    select: function( event, ui ) {
+                        event.preventDefault();
+                        $("#search-box").val(ui.item.label);
+                        myMap.setCenter([ui.item.lang, ui.item.lat]);
+                    }
+                });
+                // myMap.controls.add("zoomControl").add("typeSelector").add("mapTools");
                 placemarks.forEach(placemark => {
                     var myPlacemark = new ymaps.Placemark([placemark.lang, placemark.lat], {}, {
                         iconImageHref: './assets/img/map-pin.png',
@@ -202,13 +217,17 @@ $(document).ready(function () {
                         $('#Placemark-Modal .modal-btn').attr('data-id', placemark.id);
                         $('#Placemark-Modal .modal-text').html(placemark.description_ru);
                         $('#Placemark-Modal .modal-title').html(placemark.title_ru);
+						$('#Placemark-Modal #direction').html(placemark.direction);
+						$('#Placemark-Modal #format').html(placemark.format);
+						$('#Placemark-Modal #height').html(placemark.height);
+						$('#Placemark-Modal #width').html(placemark.width);
 						$('#Placemark-Modal #lat').html(placemark.lat);
 						$('#Placemark-Modal #lng').html(placemark.lang);
 						console.log(placemark);
                         PlacemarkModal.style.display = 'block'
                     });
                 })
-                myMap.controls.remove('mapTools').remove('zoomControl').remove('typeSelector');
+                // myMap.controls.remove('mapTools').remove('zoomControl').remove('typeSelector');
             },
             error: function () {
 
@@ -227,6 +246,6 @@ $(document).ready(function () {
     $('#lang').change(function() {
         window.location.replace(this.value);
     });
-	
+
 	$('#partners-slider').slick();
 });
