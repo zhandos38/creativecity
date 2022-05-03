@@ -283,5 +283,12 @@ $(document).ready(function () {
         window.location.replace(this.value);
     });
 
-	$('#partners-slider').slick();
+	$('#partners-slider').slick({
+        autoplay: true,
+        autoplaySpeed: 0,
+        speed: 2000,
+        cssEase:'linear',
+        infinite: true,
+        slidesToShow: 6,
+    });
 });

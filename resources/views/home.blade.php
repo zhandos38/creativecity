@@ -170,7 +170,7 @@
                 {{--                </div>--}}
                 <div class="about-partners">
                     <div class="partners-title">@lang('Partners and clients')</div>
-                    <div id="partners-slider" class="partners-imgs" data-slick='{"slidesToShow": 6, "slidesToScroll": 6, "autoplay": true, "autoplaySpeed": 0, "infinite": true, "cssEase": "linear", speed: 2000}'>
+                    <div id="partners-slider" class="partners-imgs">
                         @foreach($partners as $p)
                             <div class="img-item"><img src="{{ $p->getImage() }}" alt="{{ $p->title }}"></div>
                         @endforeach
